@@ -1,11 +1,14 @@
 package com.example.wifip2p_mdns_test;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.NetworkInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.util.Log;
+
+import java.io.IOException;
 
 // Based on https://developer.android.com/guide/topics/connectivity/wifip2p#java
 public class WifiP2PBroadcastReceiver extends BroadcastReceiver {
@@ -20,6 +23,7 @@ public class WifiP2PBroadcastReceiver extends BroadcastReceiver {
         this.activity = activity;
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
@@ -48,6 +52,15 @@ public class WifiP2PBroadcastReceiver extends BroadcastReceiver {
             // Respond to new connection or disconnections
             NetworkInfo networkInfo = (NetworkInfo) intent
                     .getParcelableExtra(WifiP2pManager.EXTRA_NETWORK_INFO);
+            if(networkInfo.isConnected()) {
+                log("Connected to p2p");
+                try {
+                    activity.setupSocket();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    log("Unable to set up socket");
+                }
+            }
             // TODO: Better description
             log("WIFI P2P Connection changed: " + networkInfo.toString());
 
@@ -59,7 +72,7 @@ public class WifiP2PBroadcastReceiver extends BroadcastReceiver {
     }
 
     void log(String text) {
-        activity.log(text);
+        activity.logOnMain(text);
     }
 
 }
