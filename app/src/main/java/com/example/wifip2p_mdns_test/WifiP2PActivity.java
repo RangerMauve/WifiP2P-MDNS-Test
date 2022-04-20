@@ -226,16 +226,6 @@ public class WifiP2PActivity extends AppCompatActivity implements WifiP2pManager
         logOnMain(">> " + message);
     }
 
-    InetAddress getBroadcastAddress() throws IOException {
-        DhcpInfo dhcp = wifiManager.getDhcpInfo();
-
-        int broadcast = (dhcp.ipAddress & dhcp.netmask) | ~dhcp.netmask;
-        byte[] quads = new byte[4];
-        for (int k = 0; k < 4; k++)
-            quads[k] = (byte) ((broadcast >> k * 8) & 0xFF);
-        return InetAddress.getByAddress(quads);
-    }
-
     public void setupSocket() throws IOException {
         if(socket != null && !socket.isClosed()) return;
 
@@ -326,7 +316,10 @@ public class WifiP2PActivity extends AppCompatActivity implements WifiP2pManager
             @Override
             public void onUnavailable() {
                 logOnMain("Unable to find existing group");
-                // TODO: Create group if autocreating
+                // Create group if autocreating and one doesn't exist
+                if(autoConnecting) {
+                    createGroup();
+                }
             }
 
             @Override
