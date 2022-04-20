@@ -13,24 +13,6 @@
         android:layout_height="wrap_content"
         android:text="Auto-Connect" />
 
-    <Button
-        android:id="@+id/StartButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Find Peers" />
-
-    <Button
-        android:id="@+id/CreateButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Create Group" />
-
-    <Button
-        android:id="@+id/ConnectButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Connect To Group" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">

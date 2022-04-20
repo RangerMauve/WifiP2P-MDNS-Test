@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.wifip2p_mdns_test"
-        minSdk 21
+        minSdk 29
         targetSdk 30
         versionCode 1
         versionName "1.0"
@@ -29,9 +29,9 @@ android {
 
 dependencies {
 
-    implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:2.0.4'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation fileTree(include: ['*.aar'], dir: 'libs')
 }
